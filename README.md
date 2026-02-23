@@ -14,6 +14,7 @@ GameAnimationSample 打包插件化
         - 创建 `BaseCharacter_Mover` 仅包含基础执行逻辑,减轻基础扩展的原始体积
         - 设计 将美术资产分离放置在 子类(例:`BaseCharacter_Hero`)
         - 移除 `AC_VisualOverrideManager` 减少内存引用
+        - 解绑场景方块转换,使用接口 `BPI_Traversable_Ledges` 消息函数
     - 输入代理
         - `InputAction` 打包代理事件函数
         - 创建 `ProduceIpuit` 中使用到的 `Get_IA` 代理函数 (Input - `Get_TwinStick_AimDirection` / `Get_Move`)
@@ -38,7 +39,7 @@ GameAnimationSample 打包插件化
 ## Plan
 
 - [x] 代理输入分离
-- [ ] 基础引用优化
+- [x] 基础引用优化
 - [ ] 待机角色转动
 - [ ] 掩避模式扩展
 - [ ] 动画叠加图层
