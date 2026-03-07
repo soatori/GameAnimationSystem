@@ -57,3 +57,97 @@ GameAnimationSample 打包插件化
 
 [UE-Only Content - Licensed for Use Only with Unreal Engine-based Products](https://www.unrealengine.com/en-US/eula/content)
 [Game Animation Sample | Fab](https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016)
+
+## GASP插件化修改日志
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/6027b5e9-a5a6-4cc0-9205-8baf510fd929.png)
+
+GASP 使用 Mover 组件会使用 _网络预测_
+
+*   原模板项目中使用设置 - ++迁移使用插件时注意修改项目设置++
+    
+    *   全局-首选 Tick 策略
+        
+        *   独立
+            
+    *   固定 tick-模拟代理网络 LOD
+        
+        *   已插值
+            
+    *   固定 tick 帧率（可选）
+        
+        *   原 60
+            
+        *   倍速  64/128
+            
+
+---
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/9ad0d070-ef24-42d1-b4d1-4672ba0a5708.png)
+
+插件中将原SandboxCharacter\_Mover 的 InputAction 事件的控制，独立打包成事件
+
+---
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/315c91f6-8249-4e60-b432-7b12d5a1d12b.png)
+
+SandboxCharacter\_Mover 中默认的 InputAction 是写死在 ProduceIpuit 需要的函数中
+
+*   插件版使用 Get\_IA 代理函数，实际场景需要重载该函数
+    
+    *   Input - ++Get\_TwinStick\_AimDirection++ / ++Get\_Move++
+        
+*   MoverInputProducerInterface(移动器输入生产者接口)-ProduceIpuit 
+    
+    *   ++_To find where Mover takes inputs, open the "Produce Input" function in the INTERFACES tab._++
+        
+    *   要了解 Mover 从何处获取输入信息，请在“++接口++”选项卡中打开“++Produce Input++”功能。
+        
+
+---
+
+插件基础角色 BaseCharacter\_Mover 仅包含基础执行逻辑
+
+美术资产分离(角色网格体和角色动画) 放置在子类 Hero 中，减轻基础扩展的原始体积
+
+移除AC\_VisualOverrideManager减少内存引用
+
+---
+
+解绑AC\_TraversalLogic\_Mover 中获取可翻越墙体的类型转换，使用BPI\_Traversable\_Ledges接口获取结果
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/d03357c8-9b64-4ea1-8e9b-0523fe5b7531.png)
+
+关卡方块 LevelBlock\_Traversable 将原始函数GetLedgeTransforms /  FindLedgeClosestToActor 替换为BPI\_Traversable\_Ledges 接口，并实现接口函数 IsTraversable，原函数逻辑不变，通过调用接口消息 以达到解绑内存目的
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/d7a47236-0025-4ae5-b6dd-2b32f8de6bec.png)
+
+原始AC\_TraversalLogic 组件顺应函数修改，使用接口消息函数,其他逻辑不变
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/92e99711-0c29-4651-aa80-1f6a9aaf2413.png)
+
+---
+
+创建 S\_AutoIdelStat![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/91ee5842-e61c-4808-92fc-2b132e1df8af.png)
+
+创建函数 OnRotationIdle 预修改旋转模式
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/9237986c-d7b3-42ac-a6e8-2a5aaa63b89b.png)
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/4fdbb669-a946-4ae1-b81d-57ab2d55f9d7.png)
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/5c451008-60a6-4f07-9c82-024c6c2aa795.png)
+
+修正Get\_OrientationIntent，在无 MoveInput 输入时,Strafe 的旋转跟随，并 减少触发角度 的判定
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/34e2f90e-6c2f-4a31-a839-17c0c4dde218.png)
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/abdce52c-bec3-4424-95c1-1345a005859f.png)
+
+![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Lk3lbmbbR1J77Om9/img/dbfba356-acd4-4941-86e4-fd91cb97cc0a.png)
+
+---
+
+原角色、CMC、游戏模式、控制器模板
+
+移至子文件夹
