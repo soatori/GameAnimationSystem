@@ -8,10 +8,20 @@ public class GameAnimationSystem : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+        PublicIncludePaths.AddRange(
+            new string[]
+            {
+                "Public"
+            }
+        );
+
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
-                "Core"
+                "Core",
+                "CoreUObject",
+                "Engine",
+                "Mover"
             }
         );
 
