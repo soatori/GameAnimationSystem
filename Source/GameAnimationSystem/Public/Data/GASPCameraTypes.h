@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-#include "GASCameraTypes.generated.h"
+#include "GASPCameraTypes.generated.h"
 
 /**
  * Camera movement mode types.
@@ -39,14 +39,14 @@ struct FCharacterPropertiesForCamera
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ECameraStyle CameraStyle;
+	ECameraStyle CameraStyle = ECameraStyle::Medium;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ECameraMode CameraMode;
+	ECameraMode CameraMode = ECameraMode::FreeCam;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 Gait; // EGait - stored as uint8 to avoid dependency on GASMovementTypes
+	uint8 Gait = 0; // EGait - stored as uint8 to avoid dependency on GASPMovementTypes
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 Stance; // EStance - stored as uint8 to avoid dependency on GASMovementTypes
+	uint8 Stance = 0; // EStance - stored as uint8 to avoid dependency on GASPMovementTypes
 };

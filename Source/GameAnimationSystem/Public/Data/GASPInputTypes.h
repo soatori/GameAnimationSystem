@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-#include "GASInputTypes.generated.h"
+#include "GASPInputTypes.generated.h"
 
 /**
  * Player input state.
@@ -15,17 +15,17 @@ struct FPlayerInputState
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToSprint;
+	bool WantsToSprint = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToWalk;
+	bool WantsToWalk = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToStrafe;
+	bool WantsToStrafe = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToAim;
+	bool WantsToAim = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToCrouch;
+	bool WantsToCrouch = false;
 };

@@ -5,11 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 
-#include "GASMovementTypes.h"
-#include "GASInputTypes.h"
-#include "GASCameraTypes.h"
+#include "GASPMovementTypes.h"
+#include "GASPInputTypes.h"
+#include "GASPCameraTypes.h"
 
-#include "GASCharacterTypes.generated.h"
+#include "GASPCharacterTypes.generated.h"
 
 /**
  * Character properties for animation system.
@@ -23,34 +23,34 @@ struct FCharacterPropertiesForAnimation
 	FPlayerInputState InputState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TEnumAsByte<EMovementMode> MovementMode;
+	TEnumAsByte<EMovementMode> MovementMode = MOVE_None;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EStance Stance;
+	EStance Stance = EStance::Stand;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ERotationMode RotationMode;
+	ERotationMode RotationMode = ERotationMode::OrientToMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EGait Gait;
+	EGait Gait = EGait::Walk;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EMovementDirection MovementDirection;
+	EMovementDirection MovementDirection = EMovementDirection::F;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FTransform ActorTransform;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector Velocity;
+	FVector Velocity = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector InputAcceleration;
+	FVector InputAcceleration = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float CurrentMaxAcceleration;
+	float CurrentMaxAcceleration = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float CurrentMaxDeceleration;
+	float CurrentMaxDeceleration = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FRotator OrientationIntent;
@@ -59,19 +59,19 @@ struct FCharacterPropertiesForAnimation
 	FRotator AimingRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bJustLanded;
+	bool bJustLanded = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector LandVelocity;
+	FVector LandVelocity = FVector::ZeroVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float SteeringTime;
+	float SteeringTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector GroundNormal;
+	FVector GroundNormal = FVector::UpVector;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector GroundLocation;
+	FVector GroundLocation = FVector::ZeroVector;
 };
 
 /**
@@ -83,8 +83,8 @@ struct FRotationOffsetCurveChooser_Inputs
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EGASPMovementMode MovementMode;
+	EGASPMovementMode MovementMode = EGASPMovementMode::OnGround;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EMovementDirection MovementDirection;
+	EMovementDirection MovementDirection = EMovementDirection::F;
 };

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/SkeletalMeshComponent.h"
 
-#include "GASAnimationTypes.generated.h"
+#include "GASPAnimationTypes.generated.h"
 
 /**
  * Experimental state machine states for animation system.
@@ -48,19 +48,19 @@ struct FBlendStackInputs
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimationAsset* Anim;
+	UAnimationAsset* Anim = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool Loop;
+	bool Loop = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float StartTime;
+	float StartTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BlendTime;
+	float BlendTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UBlendProfile* BlendProfile;
+	UBlendProfile* BlendProfile = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FName> Tags;
@@ -75,16 +75,16 @@ struct FChooserOutputs
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float StartTime;
+	float StartTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool UseMM;
+	bool UseMM = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float MMCostLimit;
+	float MMCostLimit = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BlendTime;
+	float BlendTime = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FName BlendProfile;
@@ -123,7 +123,7 @@ struct FPoseHistoryEntry
 	FTransform Transform;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Timestamp;
+	float Timestamp = 0.0f;
 };
 
 /**
@@ -136,22 +136,4 @@ struct FPoseHistory
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FPoseHistoryEntry> Entries;
-};
-
-/**
- * Auto idle state configuration.
- */
-USTRUCT(BlueprintType)
-struct FAutoIdleState
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Auto Idle")
-	bool IsAutoIdle;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Auto Idle")
-	float InTime;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Auto Idle")
-	float LastMoveTime;
 };

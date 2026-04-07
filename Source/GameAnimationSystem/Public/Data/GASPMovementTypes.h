@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-#include "GASMovementTypes.generated.h"
+#include "GASPMovementTypes.generated.h"
 
 /**
  * Movement behavior for analog stick input.
@@ -112,16 +112,16 @@ struct FMovementDirectionThresholds
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float FL;
+	float FL = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float FR;
+	float FR = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BL;
+	float BL = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float BR;
+	float BR = 0.0f;
 };
 
 /**
@@ -133,20 +133,20 @@ struct FMoverCustomInputs
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ERotationMode RotationMode;
+	ERotationMode RotationMode = ERotationMode::OrientToMovement;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EGait Gait;
+	EGait Gait = EGait::Walk;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EMovementDirection MovementDirection;
+	EMovementDirection MovementDirection = EMovementDirection::F;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float RotationOffset;
+	float RotationOffset = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float ControlRotationRate;
+	float ControlRotationRate = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool WantsToCrouch;
+	bool WantsToCrouch = false;
 };
