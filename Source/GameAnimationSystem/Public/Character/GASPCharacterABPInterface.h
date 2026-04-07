@@ -58,8 +58,8 @@ public:
 	 * @param InteractionTransform The transform to set for interaction positioning.
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Setters")
-	void Set_InteractionTransform(const FTransform& InteractionTransform);
-	virtual void Set_InteractionTransform_Implementation(const FTransform& InteractionTransform) { }
+	void Set_InteractionTransform(FTransform InteractionTransform);
+	virtual void Set_InteractionTransform_Implementation(FTransform InteractionTransform) { }
 
 	/**
 	 * Set the re-transition notification flag.
