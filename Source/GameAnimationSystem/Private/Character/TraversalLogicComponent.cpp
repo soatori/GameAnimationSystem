@@ -326,7 +326,7 @@ void UTraversalLogicComponent::PerformTraversalAction()
 			TraversalResult.StartTime,
 			NAME_None);
 
-		if (ActiveMontageProxy)
+		if (ActiveMontageProxy != nullptr)
 		{
 			// Bind callbacks to the proxy's delegates
 			ActiveMontageProxy->OnCompleted.AddDynamic(this, &UTraversalLogicComponent::OnTraversalMontageCompleted);

@@ -95,6 +95,7 @@ private:
 	FCharacterPropertiesForTraversal CharacterProperties;
 
 	// Active montage proxy for cleanup
+	UPROPERTY()
 	TObjectPtr<UPlayMoverMontageCallbackProxy> ActiveMontageProxy;
 
 };
