@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MoverTypes.h"
 
 #include "GASPMovementTypes.generated.h"
 
@@ -125,10 +126,11 @@ struct FMovementDirectionThresholds
 };
 
 /**
- * Mover custom inputs.
+ * Mover custom inputs for GASP-specific movement data.
+ * Must inherit from FMoverDataStructBase to work with Mover data collection.
  */
 USTRUCT(BlueprintType)
-struct FMoverCustomInputs
+struct FMoverCustomInputs : public FMoverDataStructBase
 {
 	GENERATED_BODY()
 
@@ -149,4 +151,25 @@ struct FMoverCustomInputs
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool WantsToCrouch = false;
+
+	// FMoverDataStructBase overrides
+	virtual FMoverDataStructBase* Clone() const override
+	{
+		return new FMoverCustomInputs(*this);
+	}
+
+	virtual UScriptStruct* GetScriptStruct() const override
+	{
+		return StaticStruct();
+	}
+};
+
+// Template specialization for NetSerialize support
+template<>
+struct TStructOpsTypeTraits<FMoverCustomInputs> : public TStructOpsTypeTraitsBase2<FMoverCustomInputs>
+{
+	enum
+	{
+		WithNetSerializer = true
+	};
 };

@@ -1,4 +1,4 @@
-﻿// Copyright Soatori Games, Inc. All Rights Reserved.
+// Copyright Soatori Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -39,28 +39,16 @@ private:
 
 public:
 
-	/** Returns Mesh subobject **/
-	inline class USkeletalMeshComponent* GetMesh() const { return Mesh; }
+	/** Returns Mesh subobject */
+	USkeletalMeshComponent* GetMesh() const { return Mesh; }
 
-	/** Name of the MeshComponent. Use this name if you want to prevent creation of the component (with ObjectInitializer.DoNotCreateDefaultSubobject). */
-	static FName MeshComponentName;
+	/** Returns CharacterMover subobject */
+	UCharacterMoverComponent* GetCharacterMover() const { return CharacterMover; }
 
-	/** Returns CharacterMover subobject **/
-	template <class T>
-	inline T* GetCharacterMover() const
-	{
-		return CastChecked<T>(CharacterMover, ECastCheckedType::NullAllowed);
-	}
-	inline UCharacterMoverComponent* GetCharacterMover() const { return CharacterMover; }
+	/** Returns NavMover subobject */
+	UNavMoverComponent* GetNavMover() const { return NavMover; }
 
-	static FName CharacterMoverComponentName;
-
-	static FName NavMoverComponentName;
-
-	/** Returns CapsuleComponent subobject **/
-	inline class UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
-
-	/** Name of the CapsuleComponent. */
-	static FName CapsuleComponentName;
+	/** Returns CapsuleComponent subobject */
+	UCapsuleComponent* GetCapsuleComponent() const { return CapsuleComponent; }
 
 };

@@ -10,11 +10,6 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(MoverCharacter)
 
-FName AMoverCharacter::MeshComponentName(TEXT("CharacterMesh0"));
-FName AMoverCharacter::CharacterMoverComponentName(TEXT("CharMoverComp"));
-FName AMoverCharacter::NavMoverComponentName(TEXT("NavMoverComp"));
-FName AMoverCharacter::CapsuleComponentName(TEXT("CollisionCylinder"));
-
 AMoverCharacter::AMoverCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
@@ -31,7 +26,7 @@ AMoverCharacter::AMoverCharacter(const FObjectInitializer& ObjectInitializer)
 	};
 	static FConstructorStatics ConstructorStatics;
 
-	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(AMoverCharacter::CapsuleComponentName);
+	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
 	CapsuleComponent->InitCapsuleSize(34.0f, 88.0f);
 	CapsuleComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
 
@@ -41,11 +36,11 @@ AMoverCharacter::AMoverCharacter(const FObjectInitializer& ObjectInitializer)
 	CapsuleComponent->bDynamicObstacle = true;
 	RootComponent = CapsuleComponent;
 
-	CharacterMover = CreateDefaultSubobject<UCharacterMoverComponent>(AMoverCharacter::CharacterMoverComponentName);
+	CharacterMover = CreateDefaultSubobject<UCharacterMoverComponent>(TEXT("CharacterMover"));
 
-	NavMover = CreateDefaultSubobject<UNavMoverComponent>(AMoverCharacter::NavMoverComponentName);
+	NavMover = CreateDefaultSubobject<UNavMoverComponent>(TEXT("NavMover"));
 
-	Mesh = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(AMoverCharacter::MeshComponentName);
+	Mesh = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	if (Mesh)
 	{
 		Mesh->AlwaysLoadOnClient = true;

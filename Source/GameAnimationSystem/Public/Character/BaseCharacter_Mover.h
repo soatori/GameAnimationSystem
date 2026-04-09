@@ -19,6 +19,7 @@ class UTraversalLogicComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UGameplayCameraComponent;
+class UCurveFloat;
 
 /**
  * Base character using Mover movement system with input production capability.
@@ -127,6 +128,14 @@ public:
 	/** Get movement direction and rotation offset */
 	UFUNCTION(BlueprintNativeEvent, Category = "Mover")
 	void Get_MovementDirectionAndOffset(EMovementDirection& MovementDirection, float& RotationOffset);
+
+	/** Get rotation offset curve for given movement mode and direction */
+	UFUNCTION(BlueprintNativeEvent, BlueprintPure, Category = "Mover")
+	UCurveFloat* Get_RotationOffsetCurve(EGASPMovementMode MovementMode, EMovementDirection MovementDirection) const;
+
+	/** Get move input as world-space vector (AI uses NavMover, players use input actions) */
+	UFUNCTION(BlueprintNativeEvent, BlueprintPure, Category = "Mover")
+	FVector Get_MoveInput() const;
 
 	/** Cache inputs from mover system */
 	UFUNCTION(BlueprintNativeEvent, Category = "Mover")

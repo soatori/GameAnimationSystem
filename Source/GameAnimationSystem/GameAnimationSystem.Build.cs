@@ -27,6 +27,7 @@ public class GameAnimationSystem : ModuleRules
                 "Core",
                 "CoreUObject",
                 "Engine",
+                "AIModule",
                 "Mover",
                 "MotionWarping",
                 "PoseSearch",
