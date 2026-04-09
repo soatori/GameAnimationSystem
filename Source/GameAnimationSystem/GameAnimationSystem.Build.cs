@@ -29,16 +29,17 @@ public class GameAnimationSystem : ModuleRules
                 "Engine",
                 "Mover",
                 "MotionWarping",
-                "AnimationDataController",
                 "PoseSearch",
                 "AnimationWarpingRuntime",
-                "Chooser"
+                "Chooser",
+                "GameplayCameras"
             });
 
         PrivateDependencyModuleNames.AddRange(
             new string[]
             {
-                "AnimationCore"
+                "AnimationCore",
+                "GameplayCameras"
             });
     }
 }
