@@ -186,7 +186,7 @@ public:
 
 	/** Toggle sprint mode */
 	UFUNCTION(BlueprintNativeEvent, Category = "Locomotion")
-	void Sprint();
+	void Sprint(bool ActionValue);
 
 	/** Handle jump failed event */
 	UFUNCTION(BlueprintNativeEvent, Category = "Action")
@@ -202,7 +202,7 @@ public:
 
 	/** Toggle aim mode */
 	UFUNCTION(BlueprintNativeEvent, Category = "Aim")
-	void Aim();
+	void Aim(bool ActionValue);
 
 	/** Move camera down */
 	UFUNCTION(BlueprintNativeEvent, Category = "Camera")

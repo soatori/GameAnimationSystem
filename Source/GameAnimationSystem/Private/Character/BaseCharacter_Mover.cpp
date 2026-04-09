@@ -4,6 +4,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Character/TraversalLogicComponent.h"
+#include "Data/GASPDataTypes.h"
 #include "DefaultMovementSet/CharacterMoverComponent.h"
 #include "GameFramework/GameplayCameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -234,34 +235,105 @@ void ABaseCharacter_Mover::DebugDraws_Implementation()
 
 void ABaseCharacter_Mover::Look_Implementation(const FVector2D& ActionValue)
 {
+	AddControllerYawInput(ActionValue.X);
+	AddControllerPitchInput(ActionValue.Y);
 }
 
 void ABaseCharacter_Mover::LookGamepad_Implementation(const FVector2D& ActionValue)
 {
+	// Only process if NOT in TwinStick mode
+	if (!bTwinStickMode)
+	{
+		const float DeltaTime = GetWorld()->GetDeltaSeconds();
+		const FVector2D ScaledInput = ActionValue * DeltaTime;
+		AddControllerYawInput(ScaledInput.X);
+		AddControllerPitchInput(ScaledInput.Y);
+	}
 }
 
 void ABaseCharacter_Mover::Walk_Implementation()
 {
+	// Only toggle walk if not sprinting
+	if (!PlayerInputState.WantsToSprint)
+	{
+		PlayerInputState.WantsToWalk = !PlayerInputState.WantsToWalk;
+	}
 }
 
-void ABaseCharacter_Mover::Sprint_Implementation()
+void ABaseCharacter_Mover::Sprint_Implementation(bool ActionValue)
 {
+	// Set sprint state
+	PlayerInputState.WantsToSprint = ActionValue;
+
+	// If starting sprint while crouching, stop crouching
+	if (ActionValue)
+	{
+		UCharacterMoverComponent* MoverComp = GetCharacterMover();
+		if (MoverComp && MoverComp->IsCrouching())
+		{
+			PlayerInputState.WantsToCrouch = false;
+		}
+	}
 }
 
 void ABaseCharacter_Mover::JumpFailed_Implementation(bool IsFailed)
 {
+	if (IsFailed)
+	{
+		UCharacterMoverComponent* MoverComp = GetCharacterMover();
+		if (MoverComp && MoverComp->IsCrouching())
+		{
+			// If crouching, stop crouching
+			PlayerInputState.WantsToCrouch = false;
+		}
+		else
+		{
+			// Set jump pressed flag for one frame
+			bJump_JustPressed = true;
+			// Reset next frame via latent action
+			FTimerHandle TimerHandle;
+			GetWorldTimerManager().SetTimerForNextTick([this]()
+			{
+				bJump_JustPressed = false;
+			});
+		}
+	}
 }
 
 void ABaseCharacter_Mover::Crouch_Implementation()
 {
+	// Check if on ground or in air (not sliding or traversing)
+	const EGASPMovementMode MovementMode = Get_CurrentMovementMode();
+	const bool bCanCrouch = (MovementMode == EGASPMovementMode::OnGround || MovementMode == EGASPMovementMode::InAir);
+
+	if (bCanCrouch)
+	{
+		UCharacterMoverComponent* MoverComp = GetCharacterMover();
+		if (MoverComp)
+		{
+			// Toggle crouch state
+			if (MoverComp->IsCrouching())
+			{
+				PlayerInputState.WantsToCrouch = false;
+			}
+			else
+			{
+				PlayerInputState.WantsToCrouch = true;
+			}
+		}
+	}
 }
 
 void ABaseCharacter_Mover::Strafe_Implementation()
 {
+	// Toggle strafe state
+	PlayerInputState.WantsToStrafe = !PlayerInputState.WantsToStrafe;
 }
 
-void ABaseCharacter_Mover::Aim_Implementation()
+void ABaseCharacter_Mover::Aim_Implementation(bool ActionValue)
 {
+	// Set aim state
+	PlayerInputState.WantsToAim = ActionValue;
 }
 
 void ABaseCharacter_Mover::CameraDown_Implementation()
